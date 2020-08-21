@@ -6,11 +6,39 @@ private var animateAlways: Bool = false
 
 @objc(Cask) public class Cask: NSObject {
 
+    struct Animation {
+        let options = [String]()
+        static enum Style: String {
+            case fade, flip, bounce, color, permanentColor, 
+                glitch, helix, rotate, zoom, drop, stretch, slide
+        }
+        
+        init?(_ style: Style) {
+            switch style {
+            default:
+                self.options = [.allowUserInteraction, .allowAnimatedContent]
+            }
+        } 
+    }
+
     @objc public static func animatedTable(_ result: UITableViewCell, hasMovedToWindow : Bool) -> UITableViewCell {
     
         if hasMovedToWindow && !animateAlways {
             return result
         }
+        
+        /**
+        let animation = Animation(animStyle ?? .fade)
+        DispatchQueue.main.async {
+            UIView.animate(
+                withDuration: animation.duration,
+                delay: animation.delay,
+                options: animation.options
+            ) {
+                result = animation.finalState 
+            }
+        }
+        */
 
         if animStyle < 6 {
             switch animStyle {
